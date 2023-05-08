@@ -10,18 +10,16 @@ function Square({ value, onSquareClick }) {
 }
 
 export default function Board() {
-
   const [xIsNext, setIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
-
-    if(squares[i] || calculateWinner(squares)){
+    if (squares[i] || calculateWinner(squares)) {
       return;
     }
 
     const nextSquares = squares.slice();
-    if(xIsNext){
+    if (xIsNext) {
       nextSquares[i] = "X";
     } else {
       nextSquares[i] = "O";
@@ -33,14 +31,13 @@ export default function Board() {
 
   const winner = calculateWinner(squares);
   let status;
-  if(winner){
+  if (winner) {
     status = "Ganador: " + winner;
   } else {
-    status = "Siguiente Jugada es de: " + (xIsNext ? "Mario": "Paty");
+    status = "Siguiente Jugada es de: " + (xIsNext ? "X" : "O");
   }
 
   return (
-
     <React.Fragment>
       <div className="status">{status}</div>
       <div className="board-row">
@@ -59,27 +56,26 @@ export default function Board() {
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
     </React.Fragment>
-
   );
 }
 
-function calculateWinner(squares){
+function calculateWinner(squares) {
   const lines = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [2,4,6],
-];
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
 
-  for(let i=0; i<lines.length; i++){
-    const[a,b,c] = lines[i];
-    if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
-    } 
+    }
   }
-    return null;
+  return null;
 }
